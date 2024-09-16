@@ -1,17 +1,24 @@
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
 import Version from './components/Version'
 import { Button } from 'flowbite-react'
 import { DrawerComponent } from './components/Drawer'
+import ListUser from './components/ListUser'
+type User = {
+  id: number
+  email: string
+  username: string
+}
 
-export default function Home(props: { version: number }) {
-  console.log(1);
-  
+type HomeProps = {
+  users: User[]
+}
+export default function Home({ users }: HomeProps) {
   return (
     <>
       <Head title="Homepage" />
       <div className="">
         <div className="title">
-          AdonisJS <Version version={props.version} /> x Inertia x React
+          AdonisJS <Version version={6} /> x Inertia x React
         </div>
 
         <span className='text-red-600'>
@@ -20,6 +27,7 @@ export default function Home(props: { version: number }) {
         </span>
       </div>
       <Button color="dark">Dark</Button>
+      <ListUser users ={users}/>
       <DrawerComponent/>
     </>
   )
