@@ -9,7 +9,8 @@ export default class Users extends BaseSchema {
       table.string('email').notNullable().unique()
       table.string('username').notNullable().unique()
       table.string('password').notNullable()
-      table.timestamps(true, true)  
+      table.integer('role_id').unsigned().references('id').inTable('roles').onDelete('SET NULL')
+      table.timestamps(true, true)
     })
   }
 

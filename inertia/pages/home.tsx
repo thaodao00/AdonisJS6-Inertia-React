@@ -1,34 +1,55 @@
 import { Head, usePage } from '@inertiajs/react'
-import Version from './components/Version'
-import { Button } from 'flowbite-react'
-import { DrawerComponent } from './components/Drawer'
-import ListUser from './components/ListUser'
+import LayoutMain from '~/layouts/LayoutMain'
+import { SliderComponent } from '~/components/Slider'
+import ImageComponent from '~/components/Image'
 type User = {
   id: number
   email: string
   username: string
+  roleId: number
+  created_at: string
+  updated_at: string
 }
-
 type HomeProps = {
-  users: User[]
+  isLoggedIn: boolean
+  user?: User
 }
-export default function Home({ users }: HomeProps) {
+function Home({ isLoggedIn, user }: HomeProps) {
+  console.log(isLoggedIn)
+  console.log(user)
+
   return (
     <>
-      <Head title="Homepage" />
-      <div className="">
-        <div className="title">
-          AdonisJS <Version version={6} /> x Inertia x React
+      <Head title="Home" />
+      <LayoutMain isLoggedIn user={user}>
+      <div className=" p-10 gap-4 md:flex">
+        <SliderComponent />
+        <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 md:w-[40%] w-full md:mt-0 mt-[5px] ">
+          <ImageComponent
+            src="https://cf.shopee.vn/file/vn-11134258-7r98o-m04biq1z1q7h2b_xhdpi"
+            alt="Description of the image"
+            className="shadow-md mb-[5px]"
+            width="w-[100%]"
+            height="h-[49%]"
+            objectFit="cover"
+          />
+          <ImageComponent
+            src="https://cf.shopee.vn/file/vn-11134258-7r98o-m04bjl4fkzxp89_xhdpi"
+            alt="Description of the image"
+            className="shadow-md"
+            width="w-[100%]"
+            height="h-[49%]"
+            objectFit="cover"
+          />
         </div>
-
-        <span className='text-red-600'>
-          Learn more about AdonisJS and Inertia.js by visiting the{' '}
-          <a href="https://docs.adonisjs.com/guides/inertia">AdonisJS documentation</a>.
-        </span>
       </div>
-      <Button color="dark">Dark</Button>
-      <ListUser users ={users}/>
-      <DrawerComponent/>
+      </LayoutMain>
     </>
   )
 }
+// Home.layout = (page: React.ReactNode) => (
+//   <LayoutMain isLoggedIn user={user}>
+//     {page}
+//   </LayoutMain>
+// )
+export default Home
