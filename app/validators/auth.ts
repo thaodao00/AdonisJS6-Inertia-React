@@ -31,3 +31,32 @@ export const loginUserValidator = vine.compile(
     password: vine.string().trim().minLength(6),
   })
 )
+export const updateUserValidator = vine.compile(
+  vine.object({
+    email: vine
+      .string()
+      .trim()
+      .email()
+      .unique(async (db, value, field) => {
+        const user = await db
+          .from('users')
+          .whereNot('id', field.meta.userId)
+          .where('email', value)
+          .first()
+        return !user
+      }),
+    username: vine
+      .string()
+      .trim()
+      .minLength(6)
+      .unique(async (db, value, field) => {
+        const user = await db
+          .from('users')
+          .whereNot('id', field.meta.userId)
+          .where('username', value)
+          .first()
+        return !user
+      }),
+    password: vine.string().trim().minLength(6).optional(),
+  })
+)

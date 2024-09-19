@@ -16,7 +16,6 @@ import server from '@adonisjs/core/services/server'
  * to a HTTP response.
  */
 server.errorHandler(() => import('#exceptions/handler'))
-
 /**
  * The server middleware stack runs middleware on all the HTTP
  * requests, even if there is no route registered for
@@ -38,7 +37,8 @@ router.use([
   () => import('@adonisjs/core/bodyparser_middleware'),
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
-  () => import('@adonisjs/auth/initialize_auth_middleware')
+  () => import('@adonisjs/auth/initialize_auth_middleware'),
+  () => import('#middleware/silent_auth_middleware')
 ])
 
 /**
@@ -47,5 +47,6 @@ router.use([
  */
 export const middleware = router.named({
   auth: () => import('#middleware/auth_middleware'),
-  guest: () => import('#middleware/guest_middleware')
+  guest: () => import('#middleware/guest_middleware'),
+  admin: () => import('#middleware/admin_middleware')
 })

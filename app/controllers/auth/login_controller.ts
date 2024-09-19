@@ -16,7 +16,6 @@ export default class LoginController {
       await auth.use('web').login(user)
       return response.redirect().toRoute('/')
     } catch (error) {
-      console.log(error)
       const errorMessage = handleError(error)
       session.flash('errors', { errorMessage })
       return response.redirect().back()

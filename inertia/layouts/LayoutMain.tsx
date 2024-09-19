@@ -10,19 +10,16 @@ type User = {
 }
 type LayoutMainProps = {
   children: React.ReactNode
-  isLoggedIn: boolean
+  isLoggedIn?: boolean
   user?: User
 }
 function LayoutMain({ children, isLoggedIn,user}: LayoutMainProps) {
-  console.log(user);
-  console.log(isLoggedIn);
-  
   return (
-    <>
+    <div>
       <HeaderComponent isLoggedIn={isLoggedIn} user ={user} />
       {children}
-      <FooterComponent />
-    </>
+      {/* <FooterComponent /> */}
+    </div>
   )
 }
 

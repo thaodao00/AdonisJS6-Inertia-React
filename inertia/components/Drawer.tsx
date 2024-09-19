@@ -4,7 +4,6 @@ import { Button, Drawer } from 'flowbite-react'
 export function DrawerComponent() {
   const [isOpen, setIsOpen] = useState(false)
   const handleClose = () => setIsOpen(false)
-  console.log('DrawerComponent', isOpen)
   return (
     <>
       <div className="flex min-h-[50vh] items-center justify-center">

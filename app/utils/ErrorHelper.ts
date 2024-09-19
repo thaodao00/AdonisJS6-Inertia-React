@@ -27,9 +27,7 @@ export function handleError(error: any): string {
     case 'E_ROUTE_NOT_FOUND':
       errorMessage = 'The page you are looking for does not exist.'
       break
-    // Add more error codes as needed
     default:
-      // Handle custom error messages if available
       if (error.messages) {
         errorMessage = Array.isArray(error.messages)
           ? error.messages.join(', ')

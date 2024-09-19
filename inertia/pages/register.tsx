@@ -4,16 +4,13 @@ import { Link } from '@inertiajs/react'
 import _ from 'lodash'
 import { LoadingButtonComponent } from '~/components/LoadingButton'
 
-function Register({ error }: { error: string }) {
+function Register() {
   const { data, setData, post, errors, processing } = useForm({
     email: '',
     password: '',
     username: '',
     password_confirmation: '',
   })
-  console.log(error)
-  console.log(processing)
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     post('/register')

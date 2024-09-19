@@ -1,6 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
-export default class UsersController {
+export default class HomeController {
   public async index({ inertia, auth }: HttpContext) {
     let isLoggedIn = false
     let user = null
