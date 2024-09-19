@@ -13,15 +13,9 @@ type HomeProps = {
   isLoggedIn: boolean
   user: User
 }
-type FlashProps = {
-  success?: string
-}
+
 
 function Profile({ isLoggedIn, user }: HomeProps) {
-  const { props } = usePage<{ flash?: FlashProps }>();
-  const flashMessage = props.flash?.success;
-  console.log(flashMessage);
-  
   return (
     <LayoutMain isLoggedIn={isLoggedIn} user={user}>
       <TabsComponent />

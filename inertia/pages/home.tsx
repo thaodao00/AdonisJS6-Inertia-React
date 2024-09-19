@@ -15,8 +15,6 @@ type HomeProps = {
   user?: User
 }
 function Home({ isLoggedIn, user }: HomeProps) {
-// console.log(user);
-
   return (
     <>
       <Head title="Home" />

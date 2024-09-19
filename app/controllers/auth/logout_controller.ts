@@ -4,9 +4,9 @@ export default class LogoutController {
   async handle({ request, response, auth }: HttpContext) {
     await auth.use('web').logout()
     // return response.redirect().toRoute('login')
-    if (request.header('referer', '')?.includes('/admin')) {
-      return response.redirect().toRoute('login')
-    }
+    // if (request.header('referer', '')?.includes('/admin')) {
+    //   return response.redirect().toRoute('login')
+    // }
 
     return response.redirect('/')
   }

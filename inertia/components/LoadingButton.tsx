@@ -11,21 +11,17 @@ type Props = {
 
 export function LoadingButtonComponent({ type, onClick, disabled, styles, loading, text }: Props) {
   return (
-    <Button
-    type={type}
-    onClick={onClick}
-    disabled={disabled}
-    className={`relative flex items-center justify-center ${styles}`}
-  >
-    {loading && (
-      <div className="absolute left-10 text-center">
-        <Spinner size="sm" />
+    <Button type={type} onClick={onClick} disabled={disabled} className={`relative ${styles}`}>
+      <div>
+        <span className={`transition-opacity ${loading ? 'opacity-50' : 'opacity-100'}`}>
+          {text}
+        </span>
       </div>
-    )}
-    <span className={`transition-opacity ${loading ? 'opacity-50' : 'opacity-100'}`}>
-      {text}
-    </span>
-  </Button>
-  
+      {loading && (
+        <div className="absolute left-0 right-0 top-0  text-center flex items-center bottom-0 justify-center">
+          <Spinner size="sm" />
+        </div>
+      )}
+    </Button>
   )
 }

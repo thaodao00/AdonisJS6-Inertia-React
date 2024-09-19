@@ -8,6 +8,6 @@ export default class DashboardController {
       isLoggedIn = true
       user = auth.user
     }
-    return inertia.render('dashboard', { isLoggedIn, user })
+    return inertia.render('admin/dashboard', { isLoggedIn, user })
   }
 }

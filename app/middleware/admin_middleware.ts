@@ -13,7 +13,6 @@ export default class AdminMiddleware {
 
   async handle(ctx: HttpContext, next: NextFn) {
     const isAdmin = ctx.auth.user?.roleId === Roles.ADMIN
-    console.log('isAdmin', ctx, Roles.ADMIN)
 
     if (!isAdmin) {
       return ctx.response.redirect().back()

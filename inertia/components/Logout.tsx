@@ -1,21 +1,12 @@
-import { useForm } from '@inertiajs/react'
-import { LoadingButtonComponent } from './LoadingButton'
+import { Link } from "@inertiajs/react"
+
 
 function LogoutComponent() {
-  const { post, processing } = useForm()
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    post('/logout')
-  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <LoadingButtonComponent
-        text="Logout"
-        loading={processing}
-        type="submit"
-        disabled={processing}
-      />
-    </form>
+    <div>
+      <Link href="/logout">Logout</Link>
+    </div>
   )
 }
 
