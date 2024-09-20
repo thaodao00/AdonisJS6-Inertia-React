@@ -9,7 +9,7 @@ function LayoutAdmin({ children }: LayoutMainProps) {
     <div>
       <AvatarComponent />
       <DrawerComponent />
-      <div className='md:pl-[300px] pl-10 pr-10 md:pt-[100px] pt-[30px]'>{children}</div>
+      <div className=' md:pl-[300px] pl-10 pr-10 pt-[100px] py-[30px] '>{children}</div>
     </div>
   )
 }

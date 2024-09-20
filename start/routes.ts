@@ -45,6 +45,8 @@ router
 router.put('/users/update-role', [UserController, 'updateRole']).prefix('/admin')
 
 router.get('/products', [ProductController,'index']).use(middleware.admin()).prefix('/admin')
+router.get('/products/create', [ProductController,'showCreate']).use(middleware.admin()).prefix('/admin')
+router.get('/products/update', [ProductController,'showUpdate']).use(middleware.admin()).prefix('/admin')
 
 router.get('/categories', [CategoryController,'index']).use(middleware.admin()).prefix('/admin')
 router.post('/categories/create', [CategoryController,'create']).use(middleware.admin()).prefix('/admin')

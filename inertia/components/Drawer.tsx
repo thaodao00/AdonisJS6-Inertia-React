@@ -23,9 +23,9 @@ export function DrawerComponent() {
   const handleClose = () => setIsOpen(false)
 
   return (
-    <div className="z-40">
+    <div className="z-40 ">
       {/* Hiển thị button trên mobile */}
-      <div className="flex md:hidden">
+      <div className="fixed h-[70px] md:hidden">
         <Button onClick={() => setIsOpen(true)} className="bg-slate-50 m-3">
           <IoIosMenu color="#000" size={25} />
         </Button>
@@ -56,7 +56,10 @@ export function DrawerComponent() {
                       <Sidebar.Item href="/admin" icon={HiChartPie}>
                         Dashboard
                       </Sidebar.Item>
-                      <Sidebar.Item href="/e-commerce/products" icon={HiShoppingBag}>
+                      <Sidebar.Item href="/admin/categories" icon={HiShoppingBag}>
+                        Category
+                      </Sidebar.Item>
+                      <Sidebar.Item href="/admin/products" icon={HiShoppingBag}>
                         Products
                       </Sidebar.Item>
                       <Sidebar.Item href="/admin/users" icon={HiUsers}>
