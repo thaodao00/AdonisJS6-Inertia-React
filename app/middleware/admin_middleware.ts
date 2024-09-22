@@ -15,7 +15,7 @@ export default class AdminMiddleware {
     const isAdmin = ctx.auth.user?.roleId === Roles.ADMIN
 
     if (!isAdmin) {
-      return ctx.response.redirect().back()
+      return ctx.response.redirect().toRoute('/login')
     }
     const output = await next()
     return output

@@ -2,8 +2,11 @@ import Category from '#models/category'
 import { createCategoryValidator, updateCategoryValidator } from '#validators/category'
 import { HttpContext } from '@adonisjs/core/http'
 export default class CategoryController {
-  public async index({ inertia, auth }: HttpContext) {
-    const categories = await Category.all()
+  public async index({ inertia, auth,request }: HttpContext) {
+    // const categories = await Category.all()
+    const page = request.input('page', 1)
+    const limit = 10
+    const categories = await Category.query().paginate(page, limit)
     return inertia.render('admin/categories/list', { user: auth.user, categories })
   }
 
