@@ -17,7 +17,7 @@ function PaginationComponent({
 
   for (let i = 1; i <= lastPage; i++) {
     items.push(
-      <li>
+      <li key={i}>
         <Link
           href={'?page=' + i}
           aria-current="page"
