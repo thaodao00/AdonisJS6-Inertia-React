@@ -6,7 +6,8 @@ import type { ManyToMany } from "@adonisjs/lucid/types/relations"
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
-
+  @column()
+  declare image: string
   @column()
   declare name: string
 
