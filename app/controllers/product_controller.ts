@@ -1,13 +1,13 @@
 import Category from '#models/category'
 import Product from '#models/product'
-import { createProductValidator } from '#validators/product'
+import { createProductValidator, updateProductValidator } from '#validators/product'
 import { cuid } from '@adonisjs/core/helpers'
 import { HttpContext } from '@adonisjs/core/http'
 import fs from 'fs'
 import path from 'path'
 
 export default class ProductController {
-  public async index({ inertia, auth,request }: HttpContext) {
+  public async index({ inertia, auth, request }: HttpContext) {
     // const products = await Product.all()
     const page = request.input('page', 1)
     const limit = 10
@@ -54,12 +54,51 @@ export default class ProductController {
       return response.redirect('/admin/products')
     } catch (error) {
       console.error('Error creating product:', error)
-      return response.status(500).send('Error creating product')
     }
   }
 
-  public async showUpdate({ inertia, auth }: HttpContext) {
+  public async showUpdate({ inertia, auth, params }: HttpContext) {
+    const id = params.id
+    const product = await Product.query().where('id', id).preload('categories').firstOrFail()
     const categories = await Category.all()
-    return inertia.render('admin/products/update', { user: auth.user, categories })
+    return inertia.render('admin/products/update', { user: auth.user, categories, product })
+  }
+
+  public async updateProduct({ request, response }: HttpContext) {
+    const id = request.input('id')
+    const data = await request.validateUsing(updateProductValidator, {
+      meta: {
+        productId: Number(id),
+      },
+    })
+    const product = await Product.findOrFail(id)
+
+    try {
+      const imageFile = request.file('image')
+      let filePath: string | undefined = undefined
+      if (imageFile) {
+        const fileName = `${cuid()}.${imageFile.extname}`
+        const uploadPath = path.join('storage', 'uploads')
+        if (!fs.existsSync(uploadPath)) {
+          fs.mkdirSync(uploadPath, { recursive: true })
+        }
+        await imageFile.move(uploadPath, { name: fileName })
+        filePath = `uploads/${fileName}`
+      }
+      product.name = data.name
+      product.description = data.description
+      product.price = data.price
+      product.stock = data.stock
+      if (filePath) {
+        product.image = filePath
+      } else {
+        product.image = product.image
+      }
+      await product.save()
+      await product.related('categories').sync(data.categories)
+      return response.redirect('/admin/products/update/' + id)
+    } catch (error) {
+      console.error('Error updating product:', error)
+    }
   }
 }

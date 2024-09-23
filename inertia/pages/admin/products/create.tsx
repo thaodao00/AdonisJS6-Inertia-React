@@ -4,13 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { LoadingButtonComponent } from '~/components/LoadingButton'
 import LayoutAdmin from '~/layouts/LayoutAdmin'
 import { FileDrop } from 'react-file-drop'
+import { toast } from 'react-toastify'
 type Category = {
   id: number
   name: string
 }
-type Props = {
-  categories: Category[]
-}
+
 function create() {
   const { categories } = usePage<{ categories: Category[] }>().props
   const { data, setData, errors, recentlySuccessful, post, processing } = useForm({
@@ -39,7 +38,6 @@ function create() {
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setData(e.target.name as keyof typeof data, e.target.value)
-    setPreviewImage(null)
     if (errors[e.target.name as keyof typeof errors]) {
       errors[e.target.name as keyof typeof errors] = undefined
     }
@@ -72,7 +70,7 @@ function create() {
 
   useEffect(() => {
     if (recentlySuccessful) {
-      console.log('Product created successfully')
+      toast.success('Product created successfully')
     }
   }, [recentlySuccessful])
   return (
