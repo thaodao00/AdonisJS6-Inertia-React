@@ -54,3 +54,4 @@ router.get('/categories', [CategoryController,'index']).use(middleware.admin()).
 router.post('/categories/create', [CategoryController,'create']).use(middleware.admin()).prefix('/admin')
 router.put('/categories/update', [CategoryController,'update']).use(middleware.admin()).prefix('/admin')
 router.delete('/categories/delete', [CategoryController,'delete']).use(middleware.admin()).prefix('/admin')
+router.get('/categories/search', [CategoryController,'searchCategory']).use(middleware.admin()).prefix('/admin')

@@ -1,3 +1,4 @@
+
 import Categories from '~/components/admin/Categories'
 import ModalCreateCategory from '~/components/admin/ModalCreateCategory'
 import useModal from '~/hooks/useModal'
@@ -5,6 +6,8 @@ import LayoutAdmin from '~/layouts/LayoutAdmin'
 
 function List() {
   const modelCreateCategory = useModal()
+
+ 
   return (
     <LayoutAdmin>
       <div className="text-end">
@@ -15,8 +18,8 @@ function List() {
           Create
         </button>
       </div>
-      {modelCreateCategory.isOpen && <ModalCreateCategory close ={modelCreateCategory.closeModal} />}
-      <Categories  />
+      {modelCreateCategory.isOpen && <ModalCreateCategory close={modelCreateCategory.closeModal} />}
+      <Categories />
     </LayoutAdmin>
   )
 }

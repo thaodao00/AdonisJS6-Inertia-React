@@ -1,10 +1,11 @@
-import {usePage } from '@inertiajs/react'
+import { router, usePage } from '@inertiajs/react'
 import _ from 'lodash'
 import { useState } from 'react'
 import useModal from '~/hooks/useModal'
 import ModalUpdateCategory from './ModalUpdateCategory'
 import ModalDeleteCategory from './ModalDeleteCategory'
 import PaginationComponent from '../Pagination'
+import SearchCategory from './SearchComponent'
 type Category = {
   id: number
   name: string
@@ -29,7 +30,19 @@ function Categories() {
   const modalUpdateCategory = useModal()
   const modalDeleteCategory = useModal()
   const [category, setCategory] = useState<Category>()
-  const { categories } = usePage<{ categories: { meta: MetaData; data: Category[] } }>().props
+  const { categories, search } = usePage<{
+    categories: { data: Category[]; meta: MetaData }
+    search: any
+  }>().props
+  console.log('categories:', categories);
+  
+  const [query, setQuery] = useState(search)
+  console.log('search:', search);
+  
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    router.get('/admin/categories/search', { search: query, page: 1 }, { preserveState: true })
+  }
   return (
     <>
       {_.isEmpty(categories?.data) ? (
@@ -38,6 +51,8 @@ function Categories() {
         </div>
       ) : (
         <div className="overflow-x-auto ">
+          <SearchCategory handleSearch={handleSearch} query={query} setQuery={setQuery} />
+
           <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 shadow-md sm:rounded-lg">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -88,12 +103,24 @@ function Categories() {
               })}
             </tbody>
           </table>
-          <PaginationComponent
-            currentPage={categories?.meta?.currentPage}
-            previousPageUrl={categories?.meta?.previousPageUrl}
-            nextPageUrl={categories?.meta?.nextPageUrl}
-            lastPage={categories?.meta?.lastPage}
-          />
+          {_.isEmpty(query) ? (
+            <PaginationComponent
+              url="/admin/categories"
+              currentPage={categories?.meta?.currentPage}
+              previousPageUrl={categories?.meta?.previousPageUrl}
+              nextPageUrl={categories?.meta?.nextPageUrl}
+              lastPage={categories?.meta?.lastPage}
+            />
+          ) : (
+            <PaginationComponent
+              url={`/admin/categories/search`}
+              currentPage={categories?.meta?.currentPage}
+              previousPageUrl={categories?.meta?.previousPageUrl}
+              nextPageUrl={categories?.meta?.nextPageUrl}
+              lastPage={categories?.meta?.lastPage}
+              query={query}
+            />
+          )}
         </div>
       )}
       {modalUpdateCategory.isOpen && (

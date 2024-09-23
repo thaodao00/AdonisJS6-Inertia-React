@@ -2,7 +2,7 @@ import Category from '#models/category'
 import { createCategoryValidator, updateCategoryValidator } from '#validators/category'
 import { HttpContext } from '@adonisjs/core/http'
 export default class CategoryController {
-  public async index({ inertia, auth,request }: HttpContext) {
+  public async index({ inertia, auth, request }: HttpContext) {
     // const categories = await Category.all()
     const page = request.input('page', 1)
     const limit = 10
@@ -53,5 +53,15 @@ export default class CategoryController {
     } catch (error) {
       console.error('Error deleting category:', error)
     }
+  }
+
+  public searchCategory = async ({ request, inertia }: HttpContext) => {
+    const search = request.input('search', '')
+    const page = request.input('page', 1)
+    const limit = 10
+    const categories = await Category.query()
+      .where('name', 'like', `%${search}%`)
+      .paginate(page, limit)
+    return inertia.render('admin/categories/list', { categories, search })
   }
 }
