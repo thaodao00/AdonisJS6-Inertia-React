@@ -7,10 +7,12 @@ import fs from 'fs'
 import path from 'path'
 
 export default class ProductController {
-  public async index({ inertia, auth }: HttpContext) {
+  public async index({ inertia, auth,request }: HttpContext) {
     // const products = await Product.all()
-    // console.log(products)
-    return inertia.render('admin/products/list', { user: auth.user })
+    const page = request.input('page', 1)
+    const limit = 10
+    const products = await Product.query().preload('categories').paginate(page, limit)
+    return inertia.render('admin/products/list', { user: auth.user, products })
   }
 
   public async showCreate({ inertia, auth }: HttpContext) {
