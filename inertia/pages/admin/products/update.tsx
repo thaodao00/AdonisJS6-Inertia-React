@@ -78,7 +78,7 @@ function update() {
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-  const res=  put('/admin/products/update')
+  const res=  put('/admin/product/update')
   console.log(res);
   
   }

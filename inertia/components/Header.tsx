@@ -5,13 +5,18 @@ import {
   NavbarToggle,
 } from 'flowbite-react'
 import LogoutComponent from './Logout'
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 
-type HeaderComponentProps = {
-  isLoggedIn?: boolean
-  user?: any
+type User ={
+  id: number
+  username: string
+  email: string
+  role: string
+  created_at: string
+  updated_at: string
 }
-function HeaderComponent({ isLoggedIn, user }: HeaderComponentProps) {
+function HeaderComponent() {
+  const { isLoggedIn, user } = usePage<{user:User,isLoggedIn:boolean}>().props
   return (
     <MegaMenu>
       <NavbarBrand href="/">
@@ -32,7 +37,7 @@ function HeaderComponent({ isLoggedIn, user }: HeaderComponentProps) {
       <NavbarToggle />
       <NavbarCollapse>
         <Link href="/">Home</Link>
-        <Link href="#">Products</Link>
+        <Link href="/product">Products</Link>
         <Link href="#">About</Link>
       </NavbarCollapse>
     </MegaMenu>

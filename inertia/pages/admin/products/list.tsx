@@ -7,7 +7,7 @@ export default function products() {
     <LayoutAdmin>
        <div className="text-end">
         <Link
-          href="/admin/products/create"
+          href="/admin/product/create"
           className="bg-blue-500 px-3 py-2 rounded-md text-white"
         >
           Create

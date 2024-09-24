@@ -31,7 +31,7 @@ function ModalDeleteProduct({ close, product }: Props) {
   })
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    destroy('/admin/products/delete')
+    destroy('/admin/product/delete')
   }
   useEffect(() => {
     if (recentlySucce) {

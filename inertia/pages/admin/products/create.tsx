@@ -60,7 +60,7 @@ function create() {
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    post('/admin/products/create')
+    post('/admin/product/create')
   }
   const handleDrop = (files: FileList | null) => {
     if (files && files.length > 0) {

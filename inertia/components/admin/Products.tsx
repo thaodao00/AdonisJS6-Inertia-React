@@ -41,7 +41,7 @@ function Products() {
     <>
       {_.isEmpty(products?.data) ? (
         <div className="text-center text-gray-500 dark:text-gray-400">
-          <p>No categories found.</p>
+          <p>No products found.</p>
         </div>
       ) : (
         <>
@@ -103,7 +103,7 @@ function Products() {
                       <td className="px-6 py-4">{item.stock}</td>
                       <td className="px-6 py-4">
                         <Link
-                          href={`/admin/products/update/${item.id}`}
+                          href={`/admin/product/update/${item.id}`}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         >
                           Edit
@@ -124,7 +124,7 @@ function Products() {
             </table>
           </div>
           <PaginationComponent
-            url="/admin/products"
+            url="/admin/product"
             currentPage={products?.meta?.currentPage}
             previousPageUrl={products?.meta?.previousPageUrl}
             nextPageUrl={products?.meta?.nextPageUrl}

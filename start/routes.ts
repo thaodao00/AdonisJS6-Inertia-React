@@ -44,11 +44,11 @@ router
   .as('admin.users')
 router.put('/users/update-role', [UserController, 'updateRole']).prefix('/admin')
 
-router.get('/products', [ProductController,'index']).use(middleware.admin()).prefix('/admin')
-router.get('/products/create', [ProductController,'showCreate']).use(middleware.admin()).prefix('/admin')
-router.get('/products/update/:id', [ProductController,'showUpdate']).use(middleware.admin()).prefix('/admin')
-router.post('/products/create', [ProductController,'createProduct']).use(middleware.admin()).prefix('/admin')
-router.put('/products/update', [ProductController,'updateProduct']).use(middleware.admin()).prefix('/admin')
+router.get('/product', [ProductController,'index']).use(middleware.admin()).prefix('/admin')
+router.get('/product/create', [ProductController,'showCreate']).use(middleware.admin()).prefix('/admin')
+router.get('/product/update/:id', [ProductController,'showUpdate']).use(middleware.admin()).prefix('/admin')
+router.post('/product/create', [ProductController,'createProduct']).use(middleware.admin()).prefix('/admin')
+router.put('/product/update', [ProductController,'updateProduct']).use(middleware.admin()).prefix('/admin')
 router.delete('/products/delete', [ProductController,'deleteProduct']).use(middleware.admin()).prefix('/admin')
 
 router.get('/categories', [CategoryController,'index']).use(middleware.admin()).prefix('/admin')
@@ -56,3 +56,6 @@ router.post('/categories/create', [CategoryController,'create']).use(middleware.
 router.put('/categories/update', [CategoryController,'update']).use(middleware.admin()).prefix('/admin')
 router.delete('/categories/delete', [CategoryController,'delete']).use(middleware.admin()).prefix('/admin')
 router.get('/categories/search', [CategoryController,'searchCategory']).use(middleware.admin()).prefix('/admin')
+
+router.get('/product', [ProductController, 'showProducts'])
+router.get('/product/:id', [ProductController, 'showProductDetail'])

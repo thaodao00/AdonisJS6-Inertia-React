@@ -2,23 +2,12 @@ import { Head, usePage } from '@inertiajs/react'
 import LayoutMain from '~/layouts/LayoutMain'
 import { SliderComponent } from '~/components/Slider'
 import ImageComponent from '~/components/Image'
-type User = {
-  id: number
-  email: string
-  username: string
-  roleId: number
-  created_at: string
-  updated_at: string
-}
-type HomeProps = {
-  isLoggedIn: boolean
-  user?: User
-}
-function Home({ isLoggedIn, user }: HomeProps) {
+
+function Home() {
   return (
     <>
       <Head title="Home" />
-      <LayoutMain isLoggedIn={isLoggedIn} user={user}>
+      <LayoutMain>
         <div className=" p-10 gap-4 md:flex">
           <SliderComponent />
           <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 md:w-[40%] w-full md:mt-0 mt-[5px] ">
