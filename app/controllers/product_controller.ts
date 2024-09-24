@@ -5,6 +5,7 @@ import { cuid } from '@adonisjs/core/helpers'
 import { HttpContext } from '@adonisjs/core/http'
 import fs from 'fs'
 import path from 'path'
+import drive from '@adonisjs/drive/services/main'
 
 export default class ProductController {
   public async index({ inertia, auth, request }: HttpContext) {
@@ -105,8 +106,15 @@ export default class ProductController {
   public async deleteProduct({ request, response }: HttpContext) {
     const id = request.input('id')
     const product = await Product.findOrFail(id)
+    const imagePath = product.image
     try {
       await product.delete()
+      if (imagePath) {
+        const fileExists = fs.existsSync(path.join('storage', imagePath))
+        if (fileExists) {
+          await drive.use().delete(imagePath)
+        }
+      }
       return response.redirect().back()
     } catch (error) {
       console.error('Error deleting product:', error)
