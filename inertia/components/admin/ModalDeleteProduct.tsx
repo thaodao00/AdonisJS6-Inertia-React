@@ -2,36 +2,43 @@ import { useForm } from '@inertiajs/react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { LoadingButtonComponent } from '../LoadingButton'
-
 type Category = {
   id: number
   name: string
   description: string
 }
+type Product = {
+  id: number
+  name: string
+  description: string
+  price: number
+  stock: number
+  categories: Category[]
+  image:string
+}
 type Props = {
   close: () => void
-  category?: Category
+  product?: Product
 }
-function ModalDeleteProduct({ close, category }: Props) {
-  // const {
-  //   processing,
-
-  //   recentlySuccessful,
-  //   delete: destroy,
-  //   wasSuccessful: recentlySucce,
-  // } = useForm({
-  //   id: category?.id,
-  // })
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault()
-  //   destroy('/admin/categories/delete')
-  // }
-  // useEffect(() => {
-  //   if (recentlySucce) {
-  //     close()
-  //     toast.success('Delete successfully')
-  //   }
-  // }, [recentlySuccessful])
+function ModalDeleteProduct({ close, product }: Props) {
+  const {
+    processing,
+    recentlySuccessful,
+    delete: destroy,
+    wasSuccessful: recentlySucce,
+  } = useForm({
+    id: product?.id,
+  })
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    destroy('/admin/products/delete')
+  }
+  useEffect(() => {
+    if (recentlySucce) {
+      close()
+      toast.success('Delete successfully')
+    }
+  }, [recentlySuccessful])
   return (
     <div className="bg-modal-bg overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%)] max-h-full">
       <div className="relative p-4 w-full max-w-md max-h-full">
@@ -58,7 +65,7 @@ function ModalDeleteProduct({ close, category }: Props) {
             </svg>
             <span className="sr-only">Close modal</span>
           </button>
-          <form className="p-4 md:p-5 text-center" >
+          <form className="p-4 md:p-5 text-center" onSubmit={handleSubmit}>
             <svg
               className="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
               aria-hidden="true"
@@ -75,14 +82,14 @@ function ModalDeleteProduct({ close, category }: Props) {
               />
             </svg>
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this {category?.name}?
+              Are you sure you want to delete this {product?.name}?
             </h3>
             <div className="flex justify-end">
               <LoadingButtonComponent
                 type="submit"
                 text=" Yes, I'm sure"
-                // loading={processing}
-                // disabled={processing}
+                loading={processing}
+                disabled={processing}
                 styles="bg-red-500 text-white"
               />
 

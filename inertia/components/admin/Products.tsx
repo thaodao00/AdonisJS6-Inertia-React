@@ -4,12 +4,12 @@ import ModalDeleteProduct from './ModalDeleteProduct'
 import _ from 'lodash'
 import FileImage from '../FileImage'
 import PaginationComponent from '../Pagination'
+import { useState } from 'react'
 type Category = {
   id: number
   name: string
   description: string
-  createdAt: string
-  updatedAt: string
+
 }
 type Product = {
   id: number
@@ -36,7 +36,7 @@ function Products() {
   const modalProductDelete = useModal()
   const { products } = usePage<{ products: { data: Product[]; meta: MetaData } }>().props
   console.log(products)
-
+  const [product, setProduct] = useState<Product>()
   return (
     <>
       {_.isEmpty(products?.data) ? (
@@ -109,7 +109,9 @@ function Products() {
                           Edit
                         </Link>
                         <button
-                          onClick={modalProductDelete.openModal}
+                          onClick={() => {
+                            modalProductDelete.openModal(), setProduct(item)
+                          }}
                           className="ml-3 font-medium text-red-400 dark:text-blue-500 hover:underline"
                         >
                           Delete
@@ -122,6 +124,7 @@ function Products() {
             </table>
           </div>
           <PaginationComponent
+            url="/admin/products"
             currentPage={products?.meta?.currentPage}
             previousPageUrl={products?.meta?.previousPageUrl}
             nextPageUrl={products?.meta?.nextPageUrl}
@@ -129,7 +132,9 @@ function Products() {
           />
         </>
       )}
-      {modalProductDelete.isOpen && <ModalDeleteProduct close={modalProductDelete.closeModal} />}
+      {modalProductDelete.isOpen && (
+        <ModalDeleteProduct close={modalProductDelete.closeModal} product={product} />
+      )}
     </>
   )
 }

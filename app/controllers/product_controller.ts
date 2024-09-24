@@ -101,4 +101,15 @@ export default class ProductController {
       console.error('Error updating product:', error)
     }
   }
+
+  public async deleteProduct({ request, response }: HttpContext) {
+    const id = request.input('id')
+    const product = await Product.findOrFail(id)
+    try {
+      await product.delete()
+      return response.redirect().back()
+    } catch (error) {
+      console.error('Error deleting product:', error)
+    }
+  }
 }

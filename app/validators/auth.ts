@@ -13,7 +13,7 @@ export const createUserValidator = vine.compile(
     username: vine
       .string()
       .trim()
-      .minLength(6)
+      .minLength(5)
       .unique(async (db, value) => {
         const user = await db.from('users').where('username', value).first()
         return !user

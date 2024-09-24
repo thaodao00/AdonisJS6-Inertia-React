@@ -49,6 +49,7 @@ router.get('/products/create', [ProductController,'showCreate']).use(middleware.
 router.get('/products/update/:id', [ProductController,'showUpdate']).use(middleware.admin()).prefix('/admin')
 router.post('/products/create', [ProductController,'createProduct']).use(middleware.admin()).prefix('/admin')
 router.put('/products/update', [ProductController,'updateProduct']).use(middleware.admin()).prefix('/admin')
+router.delete('/products/delete', [ProductController,'deleteProduct']).use(middleware.admin()).prefix('/admin')
 
 router.get('/categories', [CategoryController,'index']).use(middleware.admin()).prefix('/admin')
 router.post('/categories/create', [CategoryController,'create']).use(middleware.admin()).prefix('/admin')
