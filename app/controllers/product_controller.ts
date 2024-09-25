@@ -126,24 +126,24 @@ export default class ProductController {
     let isLoggedIn = false
     let user = null
     await auth.check()
-    if(auth.isAuthenticated){
-        isLoggedIn = true
-        user = auth.user
-      }
+    if (auth.isAuthenticated) {
+      isLoggedIn = true
+      user = auth.user
+    }
     const products = await Product.query().preload('categories').paginate(page, limit)
     const categories = await Category.all()
-    return inertia.render('products', { user: auth.user,isLoggedIn, products,categories })
+    return inertia.render('products', { user: auth.user, isLoggedIn, products, categories })
   }
   public async showProductDetail({ inertia, auth, params }: HttpContext) {
     const id = params.id
     let isLoggedIn = false
     let user = null
     await auth.check()
-    if(auth.isAuthenticated){
-        isLoggedIn = true
-        user = auth.user
-      }
+    if (auth.isAuthenticated) {
+      isLoggedIn = true
+      user = auth.user
+    }
     const product = await Product.query().where('id', id).preload('categories').firstOrFail()
-    return inertia.render('detail', { user: auth.user,isLoggedIn, product })
+    return inertia.render('detail', { user: auth.user, isLoggedIn, product })
   }
 }

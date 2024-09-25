@@ -14,7 +14,7 @@ export default class LoginController {
     try {
       const user = await User.verifyCredentials(data.email, data.password)
       await auth.use('web').login(user)
-      return response.redirect().toRoute('/')
+      return response.redirect().back()
     } catch (error) {
       const errorMessage = handleError(error)
       session.flash('errors', { errorMessage })

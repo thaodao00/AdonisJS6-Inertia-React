@@ -6,7 +6,13 @@ export default class AddRoleIdToUsers extends BaseSchema {
   public async up () {
     this.schema.table(this.tableName, (table) => {
       // Add a new column `role_id` to the `users` table
+      table.increments('id')
+      table.string('email', 255).notNullable().unique()
+      table.string('password', 180).notNullable()
+      table.string('username', 80).notNullable().unique()
       table.integer('role_id').unsigned().references('id').inTable('roles').onDelete('SET NULL')
+      table.timestamps(true, true)
+
     })
   }
 

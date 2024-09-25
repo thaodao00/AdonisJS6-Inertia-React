@@ -1,3 +1,4 @@
+
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class Products extends BaseSchema {
@@ -12,7 +13,9 @@ export default class Products extends BaseSchema {
       table.integer('stock').unsigned().notNullable()
       table.timestamps(true, true)  
 
+    
     })
+
   }
 
   public async down () {
