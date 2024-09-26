@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { LoadingButtonComponent } from '../LoadingButton'
@@ -14,7 +14,7 @@ type Product = {
   price: number
   stock: number
   categories: Category[]
-  image:string
+  image: string
 }
 type Props = {
   close: () => void
@@ -25,20 +25,21 @@ function ModalDeleteProduct({ close, product }: Props) {
     processing,
     recentlySuccessful,
     delete: destroy,
-    wasSuccessful: recentlySucce,
   } = useForm({
     id: product?.id,
   })
+  const { errors } = usePage<{ errors: { error: string } }>().props
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     destroy('/admin/product/delete')
   }
   useEffect(() => {
-    if (recentlySucce) {
+    if (recentlySuccessful) {
       close()
       toast.success('Delete successfully')
     }
   }, [recentlySuccessful])
+
   return (
     <div className="bg-modal-bg overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%)] max-h-full">
       <div className="relative p-4 w-full max-w-md max-h-full">

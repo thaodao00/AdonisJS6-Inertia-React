@@ -4,7 +4,8 @@ import ModalDeleteProduct from './ModalDeleteProduct'
 import _ from 'lodash'
 import FileImage from '../FileImage'
 import PaginationComponent from '../Pagination'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 type Category = {
   id: number
   name: string
@@ -34,8 +35,14 @@ type MetaData = {
 
 function Products() {
   const modalProductDelete = useModal()
-  const { products } = usePage<{ products: { data: Product[]; meta: MetaData } }>().props
+  const { products,errors } = usePage<{ products: { data: Product[]; meta: MetaData } }>().props
   const [product, setProduct] = useState<Product>()
+  useEffect(() => {
+    if (errors?.error) {
+      toast.error(errors?.error)
+     modalProductDelete.closeModal()
+    }
+  }, [errors])
   return (
     <>
       {_.isEmpty(products?.data) ? (

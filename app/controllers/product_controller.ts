@@ -7,6 +7,7 @@ import fs from 'fs'
 import path from 'path'
 import drive from '@adonisjs/drive/services/main'
 import CartService from '../service/CartService.js'
+import CartItems from '#models/cart_items'
 
 export default class ProductController {
   public async index({ inertia, auth, request }: HttpContext) {
@@ -100,11 +101,18 @@ export default class ProductController {
     }
   }
 
-  public async deleteProduct({ request, response }: HttpContext) {
+  public async deleteProduct({ request, response, session }: HttpContext) {
     const id = request.input('id')
     const product = await Product.findOrFail(id)
     const imagePath = product.image
     try {
+      const cartItemsCount = await CartItems.query().where('product_id', id).withCount('product')
+      if (cartItemsCount.length > 0) {
+        console.log('cartItemsCount:', cartItemsCount)
+        session.flash('errors', { error: 'Product is in cart, cannot delete.' })
+        return response.redirect().back()
+      }
+
       await product.delete()
       if (imagePath) {
         const fileExists = fs.existsSync(path.join('storage', imagePath))
@@ -114,6 +122,9 @@ export default class ProductController {
       }
       return response.redirect().back()
     } catch (error) {
+      session.flash('errors', {
+        error: 'An error occurred while deleting the product. Please try again later.',
+      })
       console.error('Error deleting product:', error)
     }
   }

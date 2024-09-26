@@ -63,7 +63,7 @@ router
   .use(middleware.admin())
   .prefix('/admin')
 router
-  .delete('/products/delete', [ProductController, 'deleteProduct'])
+  .delete('/product/delete', [ProductController, 'deleteProduct'])
   .use(middleware.admin())
   .prefix('/admin')
 
