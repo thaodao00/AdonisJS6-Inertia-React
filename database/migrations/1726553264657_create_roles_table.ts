@@ -12,7 +12,7 @@ export default class Roles extends BaseSchema {
     })
   }
 
-  public async down () {
+  async down () {
     this.schema.dropTable(this.tableName)
   }
 }

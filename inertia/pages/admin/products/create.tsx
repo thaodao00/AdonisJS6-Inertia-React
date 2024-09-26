@@ -20,7 +20,6 @@ function create() {
     description: '',
     stock: '',
   })
-  console.log('errors:', errors)
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const handleImageChange = (e: any) => {
     const file = e.target.files[0]

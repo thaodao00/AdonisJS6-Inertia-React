@@ -6,6 +6,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import fs from 'fs'
 import path from 'path'
 import drive from '@adonisjs/drive/services/main'
+import CartService from '../service/CartService.js'
 
 export default class ProductController {
   public async index({ inertia, auth, request }: HttpContext) {
@@ -22,15 +23,12 @@ export default class ProductController {
   }
   public async createProduct({ request, response }: HttpContext) {
     const data = await request.validateUsing(createProductValidator)
-    console.log('data:', data)
 
     const image1 = request.file('image')
     let filePath: string | undefined = undefined
-    console.log('image1:', image1)
 
     if (image1) {
       const fileName = `${cuid()}.${image1.extname}`
-      console.log(fileName, 'fileName')
 
       const uploadPath = path.join('storage', 'uploads')
       if (!fs.existsSync(uploadPath)) {
@@ -50,7 +48,6 @@ export default class ProductController {
         stock: data.stock,
       })
       await product.related('categories').attach(data.categories)
-      console.log('Product', product)
 
       return response.redirect('/admin/product')
     } catch (error) {
@@ -130,9 +127,10 @@ export default class ProductController {
       isLoggedIn = true
       user = auth.user
     }
+    const cart = await CartService.getUserCart(auth)
     const products = await Product.query().preload('categories').paginate(page, limit)
     const categories = await Category.all()
-    return inertia.render('products', { user: auth.user, isLoggedIn, products, categories })
+    return inertia.render('products', { user: auth.user, isLoggedIn, products, categories, cart })
   }
   public async showProductDetail({ inertia, auth, params }: HttpContext) {
     const id = params.id
@@ -143,7 +141,40 @@ export default class ProductController {
       isLoggedIn = true
       user = auth.user
     }
-    const product = await Product.query().where('id', id).preload('categories').firstOrFail()
-    return inertia.render('detail', { user: auth.user, isLoggedIn, product })
+    const cart = await CartService.getUserCart(auth)
+
+    const product = await Product.query().where('id', id).preload('categories').first()
+    return inertia.render('detail', { user: auth.user, isLoggedIn, product, cart })
+  }
+
+  public async productByCategory({ inertia, auth, request }: HttpContext) {
+    const page = request.input('page', 1)
+    const limit = 10
+    const categoryId = request.input('category_id', 0)
+    const cart = await CartService.getUserCart(auth)
+    let isLoggedIn = false
+    let user = null
+    await auth.check()
+    if (auth.isAuthenticated) {
+      isLoggedIn = true
+      user = auth.user
+    }
+    const productsQuery = Product.query().preload('categories')
+
+    if (categoryId) {
+      productsQuery.whereHas('categories', (categoryQuery) => {
+        categoryQuery.where('categories.id', categoryId)
+      })
+    }
+
+    const products = await productsQuery.paginate(page, limit)
+    const categories = await Category.all()
+    return inertia.render('products', {
+      user,
+      isLoggedIn,
+      products,
+      categories,
+      cart,
+    })
   }
 }

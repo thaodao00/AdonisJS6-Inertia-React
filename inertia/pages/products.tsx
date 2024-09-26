@@ -1,18 +1,8 @@
-import { useEffect } from 'react'
 import CategoriesComponent from '~/components/Categories'
 import ProductsComponent from '~/components/Products'
 import LayoutMain from '~/layouts/LayoutMain'
 
-type ProductComponentProps = {
-  numberCart: number // Nhận số lượng cart từ LayoutMain
-}
-
-function products({ numberCart }: ProductComponentProps) {
-  console.log('numberCart in products:', numberCart)
-  useEffect(() => {
-    console.log('numberCart in products:', numberCart)
-  }, [])
-
+function products() {
   return (
     <LayoutMain>
       <div className="p-10 grid md:grid-cols-4 grid-cols-5 gap-4">

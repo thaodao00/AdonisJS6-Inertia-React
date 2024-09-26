@@ -26,7 +26,6 @@ export default class CategoryController {
 
   public async update({ request, response }: HttpContext) {
     const id = request.input('id')
-    console.log('id:', id)
 
     const { name, description } = await request.validateUsing(updateCategoryValidator, {
       meta: {

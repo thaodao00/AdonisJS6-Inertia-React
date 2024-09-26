@@ -86,10 +86,10 @@ router
   .prefix('/admin')
 
 router.get('/product', [ProductController, 'showProducts'])
-router.get('/product/:id', [ProductController, 'showProductDetail'])
+router.get('/product/detail/:id', [ProductController, 'showProductDetail'])
+router.get('/product/category', [ProductController, 'productByCategory'])
 
 router.get('/cart', [CartController, 'show']).use(middleware.auth())
 router.post('/cart/add', [CartController, 'addToCart']).use(middleware.auth())
-router.get('/carts', [CartController, 'getCart']).use(middleware.auth())
 router.put('/cart/update', [CartController, 'updateCart']).use(middleware.auth())
 router.delete('/cart/delete', [CartController, 'deleteCart']).use(middleware.auth())

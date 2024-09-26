@@ -11,7 +11,6 @@ type User = {
 }
 function Users() {
   const { users,user } = usePage<{ users: User[],user:User }>().props
-  console.log(users)
   const [data, setData] = useState<User>()
   const modalUpdate = useModal()
   return (

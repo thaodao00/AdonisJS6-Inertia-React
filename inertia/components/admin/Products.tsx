@@ -35,7 +35,6 @@ type MetaData = {
 function Products() {
   const modalProductDelete = useModal()
   const { products } = usePage<{ products: { data: Product[]; meta: MetaData } }>().props
-  console.log(products)
   const [product, setProduct] = useState<Product>()
   return (
     <>

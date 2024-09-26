@@ -31,8 +31,7 @@ function update() {
     description: product?.description,
     stock: product?.stock,
   })
-  console.log('product:', product)
-  console.log(data)
+  
 
   const baseUrl = import.meta.env.VITE_APP_BASE_URL
   const [previewImage, setPreviewImage] = useState<string | null>(
@@ -40,8 +39,6 @@ function update() {
   )
   const handleImageChange = (e: any) => {
     const file = e.target.files[0]
-    console.log('file:', file)
-
     if (file) {
       setData('image', file)
       setPreviewImage(URL.createObjectURL(file))
@@ -50,7 +47,6 @@ function update() {
       }
     }
   }
-  console.log(previewImage);
   
   const handleImageRemove = () => {
     setPreviewImage(null)
@@ -79,8 +75,6 @@ function update() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   const res=  put('/admin/product/update')
-  console.log(res);
-  
   }
   const handleDrop = (files: FileList | null) => {
     if (files && files.length > 0) {

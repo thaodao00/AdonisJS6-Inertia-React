@@ -1,6 +1,7 @@
 import { updateUserValidator } from '#validators/auth'
 import type { HttpContext } from '@adonisjs/core/http'
 import hash from '@adonisjs/core/services/hash'
+import CartService from '../service/CartService.js'
 
 export default class ProfileController {
   public async index({ inertia, auth }: HttpContext) {
@@ -11,8 +12,9 @@ export default class ProfileController {
       isLoggedIn = true
       user = auth.user
     }
+    const cart = await CartService.getUserCart(auth)
 
-    return inertia.render('profile', { isLoggedIn, user })
+    return inertia.render('profile', { isLoggedIn, user,cart })
   }
   public async update({ request, response, auth, session }: HttpContext) {
     let user: any = null

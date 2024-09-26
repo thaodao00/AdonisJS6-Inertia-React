@@ -34,10 +34,8 @@ function Categories() {
     categories: { data: Category[]; meta: MetaData }
     search: any
   }>().props
-  console.log('categories:', categories);
   
   const [query, setQuery] = useState(search)
-  console.log('search:', search);
   
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

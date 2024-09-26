@@ -17,15 +17,12 @@ export default class CartController {
           })
           .first()
       : []
-    console.log(cart)
 
     return inertia.render('cart', { isLoggedIn, user: auth.user, cart })
   }
   public async addToCart({ request, response, auth, session }: HttpContext) {
     // Lấy dữ liệu từ request
     const { product_id, quantity } = request.only(['product_id', 'quantity'])
-    console.log(product_id, quantity)
-
     try {
       // Tìm giỏ hàng của user, nếu không có thì tạo mới
       if (auth.user) {
@@ -55,21 +52,7 @@ export default class CartController {
       console.error('Error adding to cart:', error)
     }
   }
-  public async getCart({ auth }: HttpContext) {
-    if (!auth.user) {
-      // Nếu người dùng chưa đăng nhập, trả về giỏ hàng rỗng
-      return { cart: {} }
-    }
 
-    // Tìm giỏ hàng của người dùng
-    const cart = await Cart.query().where('user_id', auth.user.id).preload('cartItems').first() // Lấy giỏ hàng đầu tiên (nếu có)
-
-    if (!cart) {
-      return { cart: {} } // Nếu không có giỏ hàng, trả về đối tượng rỗng
-    }
-
-    return cart // Trả về giỏ hàng của người dùng
-  }
 
   public async updateCart({ request, response, auth, session }: HttpContext) {
     const { productId, quantity } = request.only(['productId', 'quantity'])

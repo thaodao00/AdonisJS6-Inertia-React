@@ -2,8 +2,6 @@ import { MegaMenu, NavbarBrand, NavbarCollapse, NavbarToggle } from 'flowbite-re
 import LogoutComponent from './Logout'
 import { Link, usePage } from '@inertiajs/react'
 import { CiShoppingCart } from 'react-icons/ci'
-import { useEffect, useState } from 'react'
-import useCart from '~/hooks/userCart'
 type User = {
   id: number
   username: string
@@ -23,25 +21,12 @@ type CartItem = {
 }
 
 function HeaderComponent() {
-  const { isLoggedIn, user } = usePage<{
+  const { isLoggedIn, user, cart } = usePage<{
     user: User
     isLoggedIn: boolean
+    cart: { cartItems: CartItem[] }
   }>().props
-  // const [cart, setCart] = useState(0)
-  // console.log(cart)
 
-  // useEffect(() => {
-  //   const fetchCart = async () => {
-  //     const response = await fetch('/carts')
-  //     const data = await response.json()
-  //     setCart(data?.cartItems?.length)
-  //     console.log(data);
-
-  //   }
-
-  //   fetchCart()
-  // }, [])
-  const cartNumber = useCart();
   return (
     <MegaMenu>
       <NavbarBrand href="/">
@@ -57,7 +42,7 @@ function HeaderComponent() {
               <CiShoppingCart size={30} />
               <div>
                 <span className="absolute top-2 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                {cartNumber.cart}
+                  {cart?.cartItems.length}
                 </span>
               </div>
             </Link>
