@@ -8,6 +8,7 @@ import path from 'path'
 import drive from '@adonisjs/drive/services/main'
 import CartService from '../service/CartService.js'
 import CartItems from '#models/cart_items'
+import OrderItems from '#models/order_items'
 
 export default class ProductController {
   public async index({ inertia, auth, request }: HttpContext) {
@@ -112,7 +113,11 @@ export default class ProductController {
         session.flash('errors', { error: 'Product is in cart, cannot delete.' })
         return response.redirect().back()
       }
-
+      const orderItemsCount = await OrderItems.query().where('product_id', id).withCount('product')
+      if (orderItemsCount.length > 0) {
+        session.flash('errors', { error: 'Product is in order, cannot delete.' })
+        return response.redirect().back()
+      }
       await product.delete()
       if (imagePath) {
         const fileExists = fs.existsSync(path.join('storage', imagePath))

@@ -20,6 +20,7 @@ import UserController from '#controllers/admin/user_controller'
 import ProductController from '#controllers/product_controller'
 import CategoryController from '#controllers/category_controller'
 import CartController from '#controllers/cart_controller'
+import OrderController from '#controllers/order_controller'
 
 router.get('/', [HomeController, 'index'])
 // router.get('/', [HomeController, 'index'])
@@ -93,3 +94,6 @@ router.get('/cart', [CartController, 'show']).use(middleware.auth())
 router.post('/cart/add', [CartController, 'addToCart']).use(middleware.auth())
 router.put('/cart/update', [CartController, 'updateCart']).use(middleware.auth())
 router.delete('/cart/delete', [CartController, 'deleteCart']).use(middleware.auth())
+
+router.get('/order', [OrderController, 'index']).use(middleware.auth())
+router.post('/order/create', [OrderController, 'createOrder']).use(middleware.auth())
