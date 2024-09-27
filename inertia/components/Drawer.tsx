@@ -65,6 +65,9 @@ export function DrawerComponent() {
                       <Sidebar.Item href="/admin/users" icon={HiUsers}>
                         Users list
                       </Sidebar.Item>
+                      <Sidebar.Item href="/admin/orders" icon={HiUsers}>
+                        Orders
+                      </Sidebar.Item>
                       <Sidebar.Item href="/logout" icon={HiLogin}>
                         Logout
                       </Sidebar.Item>
@@ -89,6 +92,9 @@ export function DrawerComponent() {
 
                 <Sidebar.Item href="/admin/users" icon={HiUser}>
                   Users List
+                </Sidebar.Item>
+                <Sidebar.Item href="/admin/orders" icon={HiUsers}>
+                  Orders
                 </Sidebar.Item>
                 <Sidebar.Item href="/admin/categories" icon={HiShoppingBag}>
                   Categories

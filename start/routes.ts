@@ -97,3 +97,7 @@ router.delete('/cart/delete', [CartController, 'deleteCart']).use(middleware.aut
 
 router.get('/order', [OrderController, 'index']).use(middleware.auth())
 router.post('/order/create', [OrderController, 'createOrder']).use(middleware.auth())
+
+router.get('/orders', [OrderController, 'showOrder']).use(middleware.admin()).prefix('/admin')
+router.put('/orders/update', [OrderController, 'updateOrder']).use(middleware.admin()).prefix('/admin')
+router.get('/orders/detail/:id', [OrderController, 'showOrderDetail']).use(middleware.admin()).prefix('/admin')

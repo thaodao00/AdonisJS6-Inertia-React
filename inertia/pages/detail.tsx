@@ -1,5 +1,10 @@
 import { usePage } from '@inertiajs/react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import ImageComponent from '~/components/Image'
+import { LoadingButtonComponent } from '~/components/LoadingButton'
+import ModalProduct from '~/components/ModalProduct'
+import useModal from '~/hooks/useModal'
 import LayoutMain from '~/layouts/LayoutMain'
 type Category = {
   id: number
@@ -16,8 +21,16 @@ type Product = {
   categories: Category[]
 }
 function detail() {
-  const { product } = usePage<{ product: Product }>().props
+  const { product, success } = usePage<{ product: Product; success: { message: string } }>().props
   const baseUrl = import.meta.env.VITE_APP_BASE_URL
+  const [data, setData] = useState<Product>()
+  const modalProduct = useModal()
+  useEffect(() => {
+    if (success) {
+      modalProduct.closeModal()
+      toast.success(success?.message)
+    }
+  }, [success])
   return (
     <LayoutMain>
       <div className="p-10">
@@ -28,7 +41,12 @@ function detail() {
               alt="shopping image"
               className="object-cover w-full h-48 md:h-full rounded-t-lg md:rounded-l-lg md:rounded-t-none"
             /> */}
-            <ImageComponent width='w-ful' height='h-[560px]' alt={product?.name}  src={baseUrl + '/storage/' + product?.image} />
+            <ImageComponent
+              width="w-ful"
+              height="h-[560px]"
+              alt={product?.name}
+              src={baseUrl + '/storage/' + product?.image}
+            />
           </div>
           <form className="col-span-5 lg:col-span-3 flex-auto p-6">
             <div className="flex flex-wrap mb-3">
@@ -106,17 +124,33 @@ function detail() {
               </ul>
             </div>
             <div className="mb-5">
-              <div className="font-medium">Description
-                </div>
-                <span> {product?.description}</span>
+              <div className="font-medium">Description</div>
+              <span> {product?.description}</span>
             </div>
             <div className="flex mb-4 text-sm font-medium">
-              <button
+              {/* <button
                 type="button"
                 className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
               >
                 Buy now
-              </button>
+              </button> */}
+              {product?.stock > 0 ? (
+                <LoadingButtonComponent
+                  type="button"
+                  text="Add to cart"
+                  onClick={() => {
+                    modalProduct.openModal(), setData(product)
+                  }}
+                  styles="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                />
+              ) : (
+                <LoadingButtonComponent
+                  type="button"
+                  text="Out of stock"
+                  disabled={true}
+                  styles="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                />
+              )}
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-300">
               Free shipping on all continental US orders.
@@ -124,6 +158,7 @@ function detail() {
           </form>
         </div>
       </div>
+      {modalProduct.isOpen && <ModalProduct close={modalProduct.closeModal} data={data} />}
     </LayoutMain>
   )
 }

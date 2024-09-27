@@ -33,7 +33,10 @@ type MetaData = {
   previousPageUrl: string | null
 }
 function ProductsComponent() {
-  const { products, success } = usePage<{ products: { data: Product[]; meta: MetaData },success:{message:string} }>().props
+  const { products, success } = usePage<{
+    products: { data: Product[]; meta: MetaData }
+    success: { message: string }
+  }>().props
 
   const baseUrl = import.meta.env.VITE_APP_BASE_URL
   const [data, setData] = useState<Product>()
@@ -76,14 +79,17 @@ function ProductsComponent() {
                       ${item.price}
                     </span>
                     <div className="flex items-center justify-end mt-5">
-                    
-                      <LoadingButtonComponent
-                        type="button"
-                        text="Add to cart"
-                        onClick={() => {
-                          modalProduct.openModal(), setData(item)
-                        }}
-                      />
+                      {item.stock > 0 ? (
+                        <LoadingButtonComponent
+                          type="button"
+                          text="Add to cart"
+                          onClick={() => {
+                            modalProduct.openModal(), setData(item)
+                          }}
+                        />
+                      ) : (
+                        <LoadingButtonComponent type="button" text="Out of stock" disabled={true} />
+                      )}
                     </div>
                   </div>
                 </div>

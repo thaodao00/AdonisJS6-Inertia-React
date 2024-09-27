@@ -22,7 +22,7 @@ type CartItem = {
 }
 
 function CartComponent() {
-  const { cart } = usePage<{ cart: { cartItems: CartItem[]; totalPrice: number } }>().props
+  const { cart,errors:error } = usePage<{ cart: { cartItems: CartItem[]; totalPrice: number },errors:{message:string} }>().props
   const baseUrl = import.meta.env.VITE_APP_BASE_URL
   const [product, setProduct] = useState<Product>()
   const handleUpadeCart = (productId: number, quantity: number) => {
@@ -43,6 +43,11 @@ function CartComponent() {
       toast.success('Order created successfully')
     }
   }, [recentlySuccessful])
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message)
+    }
+  }, [errors])
   return (
     <div className="container mx-auto mt-10">
       <div className="sm:flex shadow-md my-10 w-full">
