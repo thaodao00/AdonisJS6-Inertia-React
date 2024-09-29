@@ -60,3 +60,21 @@ export const updateUserValidator = vine.compile(
     password: vine.string().trim().minLength(6).optional(),
   })
 )
+
+export const forgotPasswordValidator = vine.compile(
+  vine.object({
+    email: vine.string().trim().email(),
+   
+  })
+)
+export const resetPasswordValidator = vine.compile(
+  vine.object({
+    email: vine.string().trim().email(),
+    token: vine.string().trim(),
+    password: vine.string().trim().minLength(6),
+    password_confirmation: vine.string().trim().sameAs(
+      /// <reference path="" />
+      'password'
+    ),
+  })
+)

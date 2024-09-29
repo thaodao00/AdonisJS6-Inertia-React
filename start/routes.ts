@@ -21,6 +21,7 @@ import ProductController from '#controllers/product_controller'
 import CategoryController from '#controllers/category_controller'
 import CartController from '#controllers/cart_controller'
 import OrderController from '#controllers/order_controller'
+import ForgotPasswordController from '#controllers/auth/forgot_password_controller'
 
 router.get('/', [HomeController, 'index'])
 // router.get('/', [HomeController, 'index'])
@@ -29,6 +30,8 @@ router.get('/profile', [ProfileController, 'index']).use(middleware.auth())
 router.put('/update-profile', [ProfileController, 'update']).use(middleware.auth())
 router.delete('/delete-profile', [ProfileController, 'delete']).use(middleware.auth())
 
+
+
 router.get('/register', [RegisterController, 'show'])
 router.post('/register', [RegisterController, 'store'])
 
@@ -36,6 +39,11 @@ router.get('/login', [LoginController, 'show'])
 router.post('/login', [LoginController, 'store'])
 
 router.get('/logout', [LogoutController, 'handle'])
+
+router.get('/forgot-password', [ForgotPasswordController, 'forgotPassword']).as('forgot-password')
+router.post('/forgot-password', [ForgotPasswordController, 'sendResetLinkEmail'])
+router.get('/reset-password', [ForgotPasswordController, 'showResetForm']).as('reset-password')
+router.post('/reset-password', [ForgotPasswordController, 'reset'])
 
 router.get('/', [DashboardController, 'index']).use(middleware.admin()).prefix('/admin').as('admin')
 

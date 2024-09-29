@@ -61,8 +61,9 @@ function Login() {
         />
       </form>
 
-      <div className="mt-4">
+      <div className="mt-4 flex justify-between">
         <Link href="/register">Create new account!</Link>
+        <Link href="/forgot-password">Forgot password!</Link>
       </div>
     </div>
   )

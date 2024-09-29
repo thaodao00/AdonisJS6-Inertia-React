@@ -14,7 +14,7 @@ export default class ProfileController {
     }
     const cart = await CartService.getUserCart(auth)
 
-    return inertia.render('profile', { isLoggedIn, user,cart })
+    return inertia.render('profile', { isLoggedIn, user, cart })
   }
   public async update({ request, response, auth, session }: HttpContext) {
     let user: any = null
@@ -67,4 +67,8 @@ export default class ProfileController {
       console.error('Error deleting user:', error)
     }
   }
+  public forgotPassword({ inertia }: HttpContext) {
+    return inertia.render('forgot_password')
+  }
+  
 }
