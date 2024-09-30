@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-
+import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
+import { nanoid } from 'nanoid'
 export default class PasswordReset extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare email: string
@@ -19,4 +19,10 @@ export default class PasswordReset extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  
+  @beforeCreate()
+  public static assignUuid(product: PasswordReset) {
+    product.id = nanoid() // Tạo id duy nhất
+  }
 }

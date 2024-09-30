@@ -7,11 +7,11 @@ import { LoadingButtonComponent } from '~/components/LoadingButton'
 import LayoutAdmin from '~/layouts/LayoutAdmin'
 
 type Category = {
-  id: number
+  id: string
   name: string
 }
 type Product = {
-  id: number
+  id: string
   name: string
   image: string
   price: string
@@ -59,7 +59,7 @@ function update() {
     }
   }
 
-  const handleCheckboxChange = (categoryId: number) => {
+  const handleCheckboxChange = (categoryId: string) => {
     if (data.categories.includes(categoryId)) {
       setData(
         'categories',

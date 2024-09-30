@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbRememberMeTokensProvider } from '@adonisjs/auth/session'
-
+import { nanoid } from 'nanoid'
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
@@ -12,7 +12,7 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare username: string | null
@@ -33,4 +33,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
 
   static rememberMeTokens = DbRememberMeTokensProvider.forModel(User)
+
+  @beforeCreate()
+  public static assignUuid(user: User) {
+    user.id = nanoid() // Tạo id duy nhất
+  }
 }

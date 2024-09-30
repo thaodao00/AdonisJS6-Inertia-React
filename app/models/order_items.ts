@@ -1,18 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Product from './product.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Order from './order.js'
-
+import { nanoid } from 'nanoid'
 export default class OrderItems extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
-  declare orderId: number
+  declare orderId: string
 
   @column()
-  declare productId: number
+  declare productId: string
 
   @column()
   declare quantity: number
@@ -29,4 +29,9 @@ export default class OrderItems extends BaseModel {
   @belongsTo(() => Order)
   declare order: BelongsTo<typeof Order>
   
+   
+  @beforeCreate()
+  public static assignUuid(orderItems: OrderItems) {
+    orderItems.id = nanoid() // Tạo id duy nhất
+  }
 }

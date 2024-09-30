@@ -1,15 +1,15 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import CartItems from './cart_items.js'
-
+import { nanoid } from 'nanoid'
 export default class Cart extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
-  declare userId: number
+  declare userId: string
 
   @column()
   declare totalPrice: number
@@ -25,4 +25,10 @@ export default class Cart extends BaseModel {
 
   @hasMany(() => CartItems)
   declare cartItems: HasMany<typeof CartItems>
+
+   
+  @beforeCreate()
+  public static assignUuid(cart: Cart) {
+    cart.id = nanoid() // Tạo id duy nhất
+  }
 }

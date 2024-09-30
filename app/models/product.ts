@@ -1,12 +1,12 @@
-import { BaseModel, column, hasMany, manyToMany } from "@adonisjs/lucid/orm"
+import { BaseModel, beforeCreate, column, hasMany, manyToMany } from "@adonisjs/lucid/orm"
 import { DateTime } from "luxon"
 import Category from "./category.js"
 import type { HasMany, ManyToMany } from "@adonisjs/lucid/types/relations"
 import CartItems from "./cart_items.js"
-
+import { nanoid } from "nanoid"
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column()
   declare image: string
   @column()
@@ -34,4 +34,10 @@ export default class Product extends BaseModel {
 
   @hasMany(() => CartItems)
   declare items: HasMany<typeof CartItems>
+
+  
+  @beforeCreate()
+  public static assignUuid(product: Product) {
+    product.id = nanoid() // Tạo id duy nhất
+  }
 }

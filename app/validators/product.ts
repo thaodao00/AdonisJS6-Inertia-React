@@ -12,7 +12,7 @@ export const createProductValidator = vine.compile(
     description: vine.string().trim(),
     price: vine.number(),
     stock: vine.number(),
-    categories: vine.array(vine.number()).minLength(1),
+    categories: vine.array(vine.string()).minLength(1),
     image: vine.file({
       size: '2mb',
       extnames: ['jpg', 'jpeg', 'png', 'gif'],
@@ -21,7 +21,7 @@ export const createProductValidator = vine.compile(
 )
 export const updateProductValidator = vine.compile(
   vine.object({
-    id: vine.number(),
+    id: vine.string().trim(),
     name: vine
       .string()
       .trim()
@@ -36,7 +36,7 @@ export const updateProductValidator = vine.compile(
     description: vine.string().trim(),
     price: vine.number(),
     stock: vine.number(),
-    categories: vine.array(vine.number()).minLength(1),
+    categories: vine.array(vine.string()).minLength(1),
     image: vine.any()
   })
 )

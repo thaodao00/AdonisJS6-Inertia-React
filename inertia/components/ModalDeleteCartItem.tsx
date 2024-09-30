@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { LoadingButtonComponent } from './LoadingButton'
 
 type Product = {
-  id: number
+  id: string
   name: string
 }
 type Props = {

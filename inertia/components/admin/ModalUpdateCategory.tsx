@@ -3,7 +3,7 @@ import { LoadingButtonComponent } from '../LoadingButton'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 type Category = {
-  id: number
+  id: string
   name: string
   description: string
 }
@@ -12,6 +12,8 @@ type Props = {
   category?: Category
 }
 function ModalUpdateCategory({ close, category }: Props) {
+  console.log(category);
+  
   const { processing, errors, data, setData, recentlySuccessful, put } = useForm({
     id: category?.id,
     name: category?.name,

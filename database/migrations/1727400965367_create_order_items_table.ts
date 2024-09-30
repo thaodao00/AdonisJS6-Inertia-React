@@ -5,9 +5,9 @@ export default class OrderItems extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').unsigned().primary()
-      table.integer('order_id').unsigned().notNullable()
-      table.integer('product_id').unsigned().notNullable()
+      table.string('id').primary()
+      table.string('order_id').notNullable()
+      table.string('product_id').notNullable()
       table.integer('quantity').unsigned().notNullable()
       table.timestamps(true, true)
 

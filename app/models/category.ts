@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, column, manyToMany } from '@adonisjs/lucid/orm'
 import Product from './product.js'
 import type { ManyToMany } from '@adonisjs/lucid/types/relations'
-
+import { nanoid } from 'nanoid'
 export default class Category extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare name: string
@@ -22,4 +22,10 @@ export default class Category extends BaseModel {
     pivotTable: 'products_categories',
   })
   declare products: ManyToMany<typeof Product>
+
+   
+  @beforeCreate()
+  public static assignUuid(category: Category) {
+    category.id = nanoid() // Tạo id duy nhất
+  }
 }

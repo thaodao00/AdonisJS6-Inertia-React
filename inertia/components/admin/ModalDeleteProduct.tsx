@@ -3,12 +3,12 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { LoadingButtonComponent } from '../LoadingButton'
 type Category = {
-  id: number
+  id: string
   name: string
   description: string
 }
 type Product = {
-  id: number
+  id: string
   name: string
   description: string
   price: number

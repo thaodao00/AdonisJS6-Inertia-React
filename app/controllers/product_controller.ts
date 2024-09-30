@@ -25,6 +25,7 @@ export default class ProductController {
   }
   public async createProduct({ request, response }: HttpContext) {
     const data = await request.validateUsing(createProductValidator)
+    console.log('data:', data)
 
     const image1 = request.file('image')
     let filePath: string | undefined = undefined
@@ -49,6 +50,8 @@ export default class ProductController {
         price: data.price,
         stock: data.stock,
       })
+      console.log('product:', product)
+
       await product.related('categories').attach(data.categories)
 
       return response.redirect('/admin/product')
@@ -68,7 +71,7 @@ export default class ProductController {
     const id = request.input('id')
     const data = await request.validateUsing(updateProductValidator, {
       meta: {
-        productId: Number(id),
+        productId: id,
       },
     })
     const product = await Product.findOrFail(id)

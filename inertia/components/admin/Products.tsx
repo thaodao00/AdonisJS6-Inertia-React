@@ -7,13 +7,13 @@ import PaginationComponent from '../Pagination'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 type Category = {
-  id: number
+  id: string
   name: string
   description: string
 
 }
 type Product = {
-  id: number
+  id: string
   name: string
   description: string
   price: number

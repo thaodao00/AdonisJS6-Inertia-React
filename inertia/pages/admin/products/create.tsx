@@ -6,7 +6,7 @@ import LayoutAdmin from '~/layouts/LayoutAdmin'
 import { FileDrop } from 'react-file-drop'
 import { toast } from 'react-toastify'
 type Category = {
-  id: number
+  id: string
   name: string
 }
 
@@ -14,7 +14,7 @@ function create() {
   const { categories } = usePage<{ categories: Category[] }>().props
   const { data, setData, errors, recentlySuccessful, post, processing } = useForm({
     name: '',
-    categories: [] as number[],
+    categories: [] as string [],
     image: '',
     price: '',
     description: '',
@@ -42,7 +42,7 @@ function create() {
     }
   }
 
-  const handleCheckboxChange = (categoryId: number) => {
+  const handleCheckboxChange = (categoryId: string) => {
     if (data.categories.includes(categoryId)) {
       // Nếu danh mục đã có trong mảng, loại bỏ nó
       setData(
@@ -66,6 +66,7 @@ function create() {
       handleImageChange({ target: { files } })
     }
   }
+console.log(data);
 
   useEffect(() => {
     if (recentlySuccessful) {

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
 type User = {
-  id: number
+  id: string
   username: string
   email: string
   roleId: number

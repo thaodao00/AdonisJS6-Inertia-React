@@ -5,13 +5,13 @@ import { useState } from 'react'
 import PaginationComponent from '../Pagination'
 import ModalUpdateStatus from './ModalUpdateStatus'
 type User = {
-  id: number
+  id: string
   username: string
   email: string
   roleId: number
 }
 type Order = {
-  id: number
+  id: string
   status: string
   phone: string
   address: string
@@ -44,7 +44,7 @@ function Orders() {
     <>
       {_.isEmpty(orders?.data) ? (
         <div className="text-center text-gray-500 dark:text-gray-400">
-          <p>No products found.</p>
+          <p>No orders found.</p>
         </div>
       ) : (
         <div>

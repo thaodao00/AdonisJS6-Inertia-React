@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { LoadingButtonComponent } from '../LoadingButton'
 
 type Category = {
-  id: number
+  id: string
   name: string
   description: string
 }

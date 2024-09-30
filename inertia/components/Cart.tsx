@@ -6,7 +6,7 @@ import ModalDeleteCartItem from './ModalDeleteCartItem'
 import { toast } from 'react-toastify'
 import { LoadingButtonComponent } from './LoadingButton'
 type Product = {
-  id: number
+  id: string
   name: string
   description: string
   price: number
@@ -14,7 +14,7 @@ type Product = {
   image: string
 }
 type CartItem = {
-  id: number
+  id: string
   cartId: number
   productId: number
   quantity: number

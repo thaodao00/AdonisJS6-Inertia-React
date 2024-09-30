@@ -4,7 +4,7 @@ import useModal from '~/hooks/useModal'
 import ModalUpdate from './ModalUpdateUser'
 import { useState } from 'react'
 type User = {
-  id: number
+  id: string
   username: string
   email: string
   roleId: number

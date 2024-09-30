@@ -29,7 +29,7 @@ export default class CategoryController {
 
     const { name, description } = await request.validateUsing(updateCategoryValidator, {
       meta: {
-        categoryId: Number(id),
+        categoryId: id,
       },
     })
     const category = await Category.findOrFail(id)

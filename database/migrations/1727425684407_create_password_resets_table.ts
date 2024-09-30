@@ -5,7 +5,7 @@ export default class PasswordResets extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.string('id').primary()
       table.string('email').notNullable()
       table.string('token').notNullable()
       table.timestamp('expires_at').notNullable()

@@ -7,7 +7,7 @@ import ModalDeleteCategory from './ModalDeleteCategory'
 import PaginationComponent from '../Pagination'
 import SearchCategory from './SearchComponent'
 type Category = {
-  id: number
+  id: string
   name: string
   description: string
   createdAt: string
@@ -36,8 +36,8 @@ function Categories() {
   }>().props
   
   const [query, setQuery] = useState(search)
-  
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  console.log(categories);
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     router.get('/admin/categories/search', { search: query, page: 1 }, { preserveState: true })
   }

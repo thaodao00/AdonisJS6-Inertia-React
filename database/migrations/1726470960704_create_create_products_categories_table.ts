@@ -6,8 +6,8 @@ export default class ProductsCategories extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').unsigned().primary()
-      table.integer('product_id').unsigned().notNullable()
-      table.integer('category_id').unsigned().notNullable()
+      table.string('product_id').notNullable()
+      table.string('category_id').notNullable()
       table.timestamps(true, true)
 
       // Đặt khóa ngoại

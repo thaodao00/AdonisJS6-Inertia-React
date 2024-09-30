@@ -1,7 +1,7 @@
 import { Link, usePage } from '@inertiajs/react'
 import _ from 'lodash'
 type Product = {
-  id: number
+  id: string
   name: string
   description: string
   price: number
@@ -9,12 +9,12 @@ type Product = {
   image: string
 }
 type OrderItem = {
-  id: number
+  id: string
   quantity: number
   product: Product
 }
 type Order = {
-  id: number
+  id: string
   orderItems: OrderItem[]
   totalAmount: number
   status: string
@@ -23,7 +23,7 @@ type Order = {
   phone: string
 }
 type User = {
-  id: number
+  id: string
   username: string
   email: string
   phone: string

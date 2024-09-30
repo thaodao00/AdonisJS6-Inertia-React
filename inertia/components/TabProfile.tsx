@@ -3,7 +3,7 @@ import { LoadingButtonComponent } from './LoadingButton'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 type User = {
-  id: number
+  id: string
   email: string
   username: string
   roleId: number

@@ -5,8 +5,8 @@ export default class Orders extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').unsigned().primary()
-      table.integer('user_id').unsigned().notNullable()
+      table.string('id').primary()
+      table.string('user_id').notNullable()
       table
         .enum('status', ['pending', 'processing', 'completed', 'canceled'])
         .notNullable()
