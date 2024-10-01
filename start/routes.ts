@@ -30,8 +30,6 @@ router.get('/profile', [ProfileController, 'index']).use(middleware.auth())
 router.put('/update-profile', [ProfileController, 'update']).use(middleware.auth())
 router.delete('/delete-profile', [ProfileController, 'delete']).use(middleware.auth())
 
-
-
 router.get('/register', [RegisterController, 'show'])
 router.post('/register', [RegisterController, 'store'])
 
@@ -107,5 +105,13 @@ router.get('/order', [OrderController, 'index']).use(middleware.auth())
 router.post('/order/create', [OrderController, 'createOrder']).use(middleware.auth())
 
 router.get('/orders', [OrderController, 'showOrder']).use(middleware.admin()).prefix('/admin')
-router.put('/orders/update', [OrderController, 'updateOrder']).use(middleware.admin()).prefix('/admin')
-router.get('/orders/detail/:id', [OrderController, 'showOrderDetail']).use(middleware.admin()).prefix('/admin')
+router
+  .put('/orders/update', [OrderController, 'updateOrder'])
+  .use(middleware.admin())
+  .prefix('/admin')
+router
+  .get('/orders/detail/:id', [OrderController, 'showOrderDetail'])
+  .use(middleware.admin())
+  .prefix('/admin')
+
+router.get('/download/:fileName', [ProductController, 'downloadImage']).use(middleware.admin()).prefix('/admin')

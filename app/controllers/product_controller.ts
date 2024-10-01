@@ -9,6 +9,7 @@ import drive from '@adonisjs/drive/services/main'
 import CartService from '../service/CartService.js'
 import CartItems from '#models/cart_items'
 import OrderItems from '#models/order_items'
+import app from '@adonisjs/core/services/app'
 
 export default class ProductController {
   public async index({ inertia, auth, request }: HttpContext) {
@@ -195,5 +196,21 @@ export default class ProductController {
       categories,
       cart,
     })
+  }
+
+  public async downloadImage({ params, response }: HttpContext) {
+    const fileName = params.fileName
+    const filePath = app.makePath(path.normalize(`storage/uploads/${fileName}`))
+  
+    console.log('filePath:', fileName)
+    console.log('filePath:', filePath)
+  
+    try {
+       // Buộc trình duyệt tải tệp xuống
+      return response.attachment(filePath, fileName)
+    } catch (error) {
+      console.log('Error downloading image:', error)
+      return response.notFound({ message: 'File not found' })
+    }
   }
 }

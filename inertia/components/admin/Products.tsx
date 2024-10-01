@@ -6,11 +6,11 @@ import FileImage from '../FileImage'
 import PaginationComponent from '../Pagination'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { FaDownload } from 'react-icons/fa'
 type Category = {
   id: string
   name: string
   description: string
-
 }
 type Product = {
   id: string
@@ -35,14 +35,29 @@ type MetaData = {
 
 function Products() {
   const modalProductDelete = useModal()
-  const { products,errors } = usePage<{ products: { data: Product[]; meta: MetaData } }>().props
+  const { products, errors } = usePage<{ products: { data: Product[]; meta: MetaData } }>().props
   const [product, setProduct] = useState<Product>()
+
   useEffect(() => {
     if (errors?.error) {
       toast.error(errors?.error)
-     modalProductDelete.closeModal()
+      modalProductDelete.closeModal()
     }
   }, [errors])
+  // const handleDownload = (fileName: string) => {
+  //   const cleanFileName = fileName.replace('uploads/', '')
+  //   window.location.href = `/admin/download/${cleanFileName}`
+  //   console.log('download:', cleanFileName);
+  // }
+  const handleDownload = (fileName: string) => {
+    const cleanFileName = fileName.replace('uploads/', '')
+    const link = document.createElement('a')
+    link.href = `/admin/download/${cleanFileName}`
+    link.download = cleanFileName
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
   return (
     <>
       {_.isEmpty(products?.data) ? (
@@ -89,7 +104,12 @@ function Products() {
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        <FileImage imagePath={item.image} />
+                        <div className="flex items-end">
+                          <FileImage imagePath={item.image} />
+                          <button onClick={() => handleDownload(item.image)}>
+                            <FaDownload className="ml-3" />
+                          </button>
+                        </div>
                       </th>
                       <th
                         scope="row"
